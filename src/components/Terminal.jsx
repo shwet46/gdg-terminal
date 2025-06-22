@@ -38,7 +38,7 @@ const Terminal = () => {
   ];
 
   const availableCommands = {
-    'help': 'Show available commands',
+    'gdg help': 'Show available commands',
     'whoarewe': 'About GDG VIT',
     'gdg hackbuild': 'Our hackathon',
     'gdg spectrum': 'Our spectrum of annual events',
@@ -88,10 +88,13 @@ const Terminal = () => {
       ''
     ],
     'gdg hackbuild': [
-      'We will reveal about it soon ;)'
+      'We will reveal about it soon ;)',
+      'Something really excitingg !'
     ],
     'gdg spectrum': [
-      'Our very own annual event, Spectrum, brings together tech enthusiasts',
+      'Our very own annual fest for cool tech Nerds',
+      'To know more about it, check out here:',
+      <a href="https://spectrum-2025.vercel.app/" className="underline hover:text-pink-300 transition-colors">spectrum.tech</a>
     ],
     'gdg socials': [
       <div key="gdg-socials-list" className="output w-full max-w-[80ch] text-[#c6d0f5] animate-fadein">
@@ -169,10 +172,10 @@ const Terminal = () => {
 
     if (command === '') {
       response = [''];
-    } else if (baseCommand === 'gdg clear') {
+    } else if (baseCommand === 'clear') {
       setCommandHistory([]);
       return;
-    } else if (baseCommand === 'help') {
+    } else if (baseCommand === 'gdg help') {
       response = [
         'Available commands:',
         '',
@@ -343,7 +346,7 @@ const Terminal = () => {
       {/* Footer */}
       <footer className="text-[#B5BFE2] text-[0.95rem] bg-none mt-10 border-t border-[#626880] pt-4 w-full text-left">
         <p>GDG VIT Terminal v1.0.1 | Built with Caffinee and JavaScript</p>
-        <p className="text-[#f2d5cf] animate-fade">Click anywhere to focus • Type 'help' for commands</p>
+        <p className="text-[#f2d5cf] animate-fade">Click anywhere to focus • Type 'gdg help' for commands</p>
       </footer>
       <style>{`
         @keyframes fade {
