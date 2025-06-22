@@ -1,4 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
+import Banner from './Banner';
+import CommandHistory from './CommandHistory';
+import TerminalFooter from './TerminalFooter';
 
 const Terminal = () => {
   const [currentPath, setCurrentPath] = useState('~');
@@ -8,16 +11,17 @@ const Terminal = () => {
   const [showCursor, setShowCursor] = useState(true);
   const [bootSequence, setBootSequence] = useState(true);
   const [bootText, setBootText] = useState('');
+  const [historyIndex, setHistoryIndex] = useState(null);
   const inputRef = useRef(null);
   const terminalRef = useRef(null);
 
   const gdgBanner = `
- ██████╗ ██████╗  ██████╗     ██╗   ██╗██╗████████╗
-██╔════╝ ██╔══██╗██╔════╝     ██║   ██║██║╚══██╔══╝
-██║  ███╗██║  ██║██║  ███╗    ██║   ██║██║   ██║   
-██║   ██║██║  ██║██║   ██║    ╚██╗ ██╔╝██║   ██║   
-╚██████╔╝██████╔╝╚██████╔╝     ╚████╔╝ ██║   ██║   
- ╚═════╝ ╚═════╝  ╚═════╝       ╚═══╝  ╚═╝   ╚═╝   
+ ██████╗  ██████╗   ██████╗     ██╗   ██╗ ██╗ ████████╗
+██╔════╝  ██╔══██╗ ██╔════╝     ██║   ██║ ██║ ╚══██╔══╝
+██║  ███╗ ██║  ██║ ██║  ███╗    ██║   ██║ ██║    ██║   
+██║   ██║ ██║  ██║ ██║   ██║    ╚██╗ ██╔╝ ██║    ██║   
+╚██████╔╝ ██████╔╝ ╚██████╔╝     ╚████╔╝  ██║    ██║   
+ ╚═════╝  ╚═════╝   ╚═════╝       ╚═══╝   ╚═╝    ╚═╝   
 `;
 
   const bootMessages = [
@@ -33,7 +37,7 @@ const Terminal = () => {
     'Google Developer Group - VIT Mumbai',
     'Building the future, one line of code at a time.',
     '',
-    'Type "help" to see available commands.',
+    'Type "gdg help" to see available commands.',
     ''
   ];
 
@@ -79,7 +83,9 @@ const Terminal = () => {
 
   const commandResponses = {
     'whoarewe': [
-      'GDG VIT - Google Developer Group at VIT University',
+      'GDG VIT - Google Developer Groups on Campus at VIT Mumbai',
+      '',
+      'Converting ideas into reality 🚀',
       '',
       'We are a community of passionate developers, designers, and tech enthusiasts',
       'dedicated to learning, sharing knowledge, and building amazing projects.',
@@ -140,7 +146,7 @@ const Terminal = () => {
       setTimeout(() => {
         setBootSequence(false);
         inputRef.current?.focus();
-      }, 4000); // Increased from 2000 to 4000 ms
+      }, 6000); // Increased from 2000 to 4000 ms
     }
   }, [bootSequence]);
 
@@ -166,7 +172,7 @@ const Terminal = () => {
   const handleCommand = (cmd) => {
     const command = cmd.trim().toLowerCase();
     const args = command.split(' ');
-    const baseCommand = args.slice(0, 2).join(' '); // support 'gdg command'
+    const baseCommand = args.slice(0, 2).join(' '); 
 
     let response = [];
 
@@ -182,8 +188,6 @@ const Terminal = () => {
         ...Object.entries(availableCommands).map(([cmd, desc]) => `${cmd.padEnd(16)} - ${desc}`),
         ''
       ];
-    } else if (baseCommand === 'gdg date') {
-      response = [new Date().toString()];
     } else if (baseCommand === 'gdg cat') {
       if (args[2] === 'README.txt') {
         response = [
@@ -214,29 +218,41 @@ const Terminal = () => {
     setCommandHistory(prev => [...prev, newEntry]);
   };
 
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
+  const handleKeyDown = (e) => {
+    if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (commandHistory.length === 0) return;
+      let newIndex = historyIndex === null ? commandHistory.length - 1 : historyIndex - 1;
+      if (newIndex < 0) newIndex = 0;
+      setHistoryIndex(newIndex);
+      setCurrentCommand(commandHistory[newIndex]?.command || '');
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (commandHistory.length === 0) return;
+      let newIndex = historyIndex === null ? commandHistory.length : historyIndex + 1;
+      if (newIndex >= commandHistory.length) {
+        setHistoryIndex(null);
+        setCurrentCommand('');
+      } else {
+        setHistoryIndex(newIndex);
+        setCurrentCommand(commandHistory[newIndex]?.command || '');
+      }
+    } else if (e.key === 'Enter') {
       e.preventDefault();
       handleCommand(currentCommand);
       setCurrentCommand('');
+      setHistoryIndex(null);
     }
   };
 
   const handleInputChange = (e) => {
     setCurrentCommand(e.target.value);
+    setHistoryIndex(null);
   };
 
-  // Always show the banner at the top after boot
-  const Banner = () => (
-    <pre className="mb-2 w-full text-left font-bold text-base md:text-lg text-blue-300 select-none drop-shadow" style={{ background: 'none', border: 'none', boxShadow: 'none', margin: 0, padding: 0 }}>
-      {gdgBanner}
-      <span className="block mt-2 mb-2 text-pink-300 font-bold text-left">Google Developer Group - VIT</span>
-    </pre>
-  );
-
-  if (bootSequence) {
+   if (bootSequence) {
     return (
-      <div className={`min-h-screen bg-[#121313] text-[#c6d0f5] font-['IBM_Plex_Mono',monospace] p-8 flex flex-col${!bootSequence ? ' animate-fadeout' : ''}`}>
+      <div className={`min-h-screen bg-[#121313] text-[#708fff] font-['IBM_Plex_Mono',monospace] p-8 flex flex-col${!bootSequence ? ' animate-fadeout' : ''}`}>
         <div className="flex-1 flex flex-col justify-start items-start w-full">
           <pre className={`w-full text-left text-base leading-relaxed bg-none m-0 font-['IBM_Plex_Mono',monospace]${!bootSequence ? ' animate-fadeout' : ''}`}>
             {bootMessages.map((line, idx) => (
@@ -248,7 +264,7 @@ const Terminal = () => {
                     : idx === 5
                     ? "text-pink-300"
                     : idx === 7
-                    ? "text-blue-300 font-bold"
+                    ? "mb-2 w-full text-left font-bold text-[0.70rem] sm:text-xs md:text-base lg:text-lg text-blue-400 select-none drop-shadow leading-[1.05] whitespace-pre-wrap"
                     : idx === 9
                     ? "text-[#B5BFE2]"
                     : idx === 11
@@ -285,48 +301,24 @@ const Terminal = () => {
   }
 
   return (
-    <div className="min-h-screen w-full bg-[#121313] text-[#c6d0f5] font-['IBM_Plex_Mono',monospace] p-8 flex flex-col items-start">
+    <div className="min-h-screen w-full bg-[#121313] text-[#c6d0f5] font-['IBM_Plex_Mono',monospace] p-8 flex flex-col items-start animate-fadein-terminal">
       <div
         ref={terminalRef}
         className="flex-1 overflow-y-auto w-full max-w-[80ch] bg-none"
       >
         {/* Terminal header */}
         <div className=" mb-4 pb-2 bg-none flex items-center">
-          <span className="text-green-300 font-bold text-base md:text-lg ml-2 tracking-wide">Welcome to our terminal, experience some bash :)</span>
+          <span className="text-green-300 font-bold text-base md:text-lg ml-2 tracking-wide">Welcome to our terminal, get some real Developer experience ~/</span>
         </div>
         {/* Banner always visible */}
-        <Banner />
+        <Banner gdgBanner={gdgBanner} />
 
         {/* Command history */}
-        {commandHistory.map((entry, index) => (
-          <div key={index} className="mb-2 w-full">
-            <div className="flex items-center w-full">
-              <span className="text-red-400 font-bold">developer@gdgvit</span>
-              <span className="text-[#c6d0f5] ml-1">:</span>
-              <span className="text-blue-300 font-bold ml-1">{currentPath}</span>
-              <span className="text-[#c6d0f5] ml-2">$</span>
-              <span className="text-[#B5BFE2] font-medium ml-2">{entry.command}</span>
-            </div>
-            <div className="ml-0 mt-1 w-full">
-              {entry.response.map((line, lineIndex) =>
-                React.isValidElement(line) ? (
-                  <React.Fragment key={lineIndex}>{line}</React.Fragment>
-                ) : (
-                  <div
-                    key={lineIndex}
-                    className="output w-full max-w-[80ch] text-[#c6d0f5] animate-fadein"
-                  >
-                    {line}
-                  </div>
-                )
-              )}
-            </div>
-          </div>
-        ))}
+        <CommandHistory commandHistory={commandHistory} currentPath={currentPath} />
 
         {/* Current command line */}
         <div className="flex items-center w-full mt-2">
-          <span className="text-red-400 font-bold">developer@gdgvit</span>
+          <span className="text-red-400 font-bold">developer@gdgvitm</span>
           <span className="text-[#c6d0f5] ml-1">:</span>
           <span className="text-blue-300 font-bold ml-1">{currentPath}</span>
           <span className="text-[#c6d0f5] ml-2">$</span>
@@ -335,7 +327,7 @@ const Terminal = () => {
             type="text"
             value={currentCommand}
             onChange={handleInputChange}
-            onKeyPress={handleKeyPress}
+            onKeyDown={handleKeyDown}
             className="bg-transparent border-none outline-none text-[#B5BFE2] font-['IBM_Plex_Mono',monospace] font-medium flex-1 text-base ml-2 focus:outline-[#babbf1] caret-[#f2d5cf] caret-[10px]"
             autoComplete="off"
             spellCheck="false"
@@ -344,10 +336,7 @@ const Terminal = () => {
       </div>
 
       {/* Footer */}
-      <footer className="text-[#B5BFE2] text-[0.95rem] bg-none mt-10 border-t border-[#626880] pt-4 w-full text-left">
-        <p>GDG VIT Terminal v1.0.1 | Built with Caffinee and JavaScript</p>
-        <p className="text-[#f2d5cf] animate-fade">Click anywhere to focus • Type 'gdg help' for commands</p>
-      </footer>
+      <TerminalFooter />
       <style>{`
         @keyframes fade {
           0% { opacity: 0}
@@ -363,6 +352,13 @@ const Terminal = () => {
         }
         .animate-fadein {
           animation: fadein 0.8s;
+        }
+        @keyframes blink {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.4; }
+        }
+        .animate-blink {
+          animation: blink 1.4s step-end infinite;
         }
       `}</style>
     </div>
