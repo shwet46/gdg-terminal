@@ -169,6 +169,12 @@ const Terminal = () => {
       url: 'https://github.com/GDGVITM',
       label: 'GitHub: /gdgvit'
     },
+     {
+      name: 'Community page',
+      className: 'community',
+      url: 'https://gdg.community.dev/gdg-on-campus-vidyalankar-institute-of-technology-mumbai-india/',
+      label: 'community'
+    },
   ];
 
   const commandResponses = {
