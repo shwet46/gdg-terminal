@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Banner from './Banner';
 import CommandHistory from './CommandHistory';
 import TerminalFooter from './TerminalFooter';
+import '../index.css'; 
 
 const Terminal = () => {
   const [currentPath, setCurrentPath] = useState('~');
@@ -30,7 +31,7 @@ const Terminal = () => {
     'Starting system services...',
     'Mounting filesystems...',
     'Network interfaces up...',
-    'Welcome to GDG VIT Terminal v2.0.1',
+    'Welcome to GDG VIT Terminal v1.0.1',
     '',
     gdgBanner,
     '',
@@ -135,6 +136,11 @@ const Terminal = () => {
       description: 'Operating Systems concepts',
       url: 'https://www.geeksforgeeks.org/operating-systems/',
       info: 'OS fundamentals including processes, memory, and scheduling'
+    },
+     'pgbooks': {
+      description: 'Some programming books',
+      url: 'https://books.goalkicker.com/',
+      info: 'For book nerds, this is a resource to some programming books'
     },
   };
 
@@ -389,7 +395,7 @@ const Terminal = () => {
                     : idx === 5
                     ? "text-pink-300"
                     : idx === 7
-                    ? "mb-2 w-full text-left font-bold text-[0.70rem] sm:text-xs md:text-base lg:text-lg text-blue-400 select-none drop-shadow leading-[1.05] whitespace-pre-wrap"
+                    ? "mb-2 w-full text-left font-bold text-[0.70rem] sm:text-xs md:text-base lg:text-lg gradient-banner select-none drop-shadow leading-[1.05] whitespace-pre-wrap"
                     : idx === 9
                     ? "text-[#B5BFE2]"
                     : idx === 11
@@ -435,8 +441,12 @@ const Terminal = () => {
         <div className=" mb-4 pb-2 bg-none flex items-center">
           <span className="text-green-300 font-bold text-base md:text-lg ml-2 tracking-wide">Welcome to our terminal, get some real Developer experience ~/</span>
         </div>
-        {/* Banner always visible */}
-        <Banner gdgBanner={gdgBanner} />
+        {/* Banner with gradient effect */}
+        <div className="banner-container mb-6">
+          <pre className="banner-text gradient-banner font-bold text-[0.70rem] sm:text-xs md:text-base lg:text-lg select-none drop-shadow leading-[1.05] whitespace-pre-wrap">
+            {gdgBanner}
+          </pre>
+        </div>
 
         {/* Command history */}
         <CommandHistory commandHistory={commandHistory} currentPath={currentPath} />
@@ -462,30 +472,6 @@ const Terminal = () => {
 
       {/* Footer */}
       <TerminalFooter />
-      <style>{`
-        @keyframes fade {
-          0% { opacity: 0}
-          50% { opacity: 0; }
-          100% { opacity: 1; }
-        }
-        .animate-fade {
-          animation: fade 2s;
-        }
-        @keyframes fadein {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-        .animate-fadein {
-          animation: fadein 0.8s;
-        }
-        @keyframes blink {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.4; }
-        }
-        .animate-blink {
-          animation: blink 1.4s step-end infinite;
-        }
-      `}</style>
     </div>
   );
 };
