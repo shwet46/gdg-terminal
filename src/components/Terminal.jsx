@@ -205,7 +205,7 @@ const Terminal = () => {
       <a href="https://spectrum-2025.vercel.app/" className="underline hover:text-pink-300 transition-colors">spectrum.tech</a>
     ],
     'gdg socials': [
-      <div key="gdg-socials-list" className="output w-full max-w-[80ch] text-[#c6d0f5] animate-fadein">
+      <div key="gdg-socials-list" className="output w-full text-[#c6d0f5] animate-fadein">
         <span className="font-bold text-pink-300">Follow us on social media:</span>
         <ul className="links list-none pl-0 mt-2 mb-2">
           {socialsList.map((social, idx) => (
@@ -214,7 +214,7 @@ const Terminal = () => {
                 href={social.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline hover:text-pink-300 transition-colors"
+                className="underline hover:text-pink-300 transition-colors break-all"
                 style={{ color: '#f2d5cf', fontWeight: 500 }}
               >
                 {social.name}
@@ -226,15 +226,15 @@ const Terminal = () => {
     ],
     'whoami': ['You should know who you are !'],
     'cat resources': [
-      <div key="resources-list" className="output w-full max-w-[80ch] text-[#c6d0f5] animate-fadein">
+      <div key="resources-list" className="output w-full text-[#c6d0f5] animate-fadein">
         <span className="font-bold text-green-300">📚 Study Resources Commands:</span>
         <div className="mt-3 mb-3">
           <div className="text-[#f2d5cf] mb-3">💡 Type any of these commands to access study resources:</div>
           <ul className="list-none pl-0 mt-2 space-y-1">
             {Object.entries(resourceCommands).map(([command, resource]) => (
-              <li key={command} className="text-[#c6d0f5]">
-                <span className="text-blue-300 font-mono font-bold">{command.padEnd(16)}</span>
-                <span className="text-[#babbf1]"> - {resource.description}</span>
+              <li key={command} className="text-[#c6d0f5] flex flex-col sm:flex-row">
+                <span className="text-blue-300 font-mono font-bold sm:w-36 lg:w-40 flex-shrink-0">{command}</span>
+                <span className="text-[#babbf1] sm:ml-2 mt-1 sm:mt-0"> - {resource.description}</span>
               </li>
             ))}
           </ul>
@@ -245,10 +245,9 @@ const Terminal = () => {
       </div>
     ],
     'date': ['' + new Date().toString(), '(Maybe you should go to one too)'],
-    'gdg contact': ['For collaboration or queries, please reach out to us at:', <a href="mailto:gdgoncampus.vit@gmail.com" className="underline hover:text-pink-300 transition-colors">gdgoncampus.vit@gmail.com</a>],
+    'gdg contact': ['For collaboration or queries, please reach out to us at:', <a href="mailto:gdgoncampus.vit@gmail.com" className="underline hover:text-pink-300 transition-colors break-all">gdgoncampus.vit@gmail.com</a>],
   };
 
-  // Cursor blinking effect
   useEffect(() => {
     const interval = setInterval(() => {
       setShowCursor(prev => !prev);
@@ -256,28 +255,24 @@ const Terminal = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Boot sequence animation
   useEffect(() => {
     if (bootSequence) {
-      // Show banner immediately
       const fullBootText = bootMessages.join('\n');
       setBootText(fullBootText);
       
       setTimeout(() => {
         setBootSequence(false);
         inputRef.current?.focus();
-      }, 6000); // Increased from 2000 to 4000 ms
+      }, 6000); 
     }
   }, [bootSequence]);
 
-  // Auto-scroll to bottom
   useEffect(() => {
     if (terminalRef.current) {
       terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
     }
   }, [commandHistory, bootText]);
 
-  // Focus input when clicking anywhere
   useEffect(() => {
     const handleClick = () => {
       if (!bootSequence && inputRef.current) {
@@ -324,7 +319,6 @@ const Terminal = () => {
         response = [`cat: ${args[2] || 'file'}: No such file or directory`];
       }
     } else if (resourceCommands[command]) {
-      // Handle resource commands
       const resource = resourceCommands[command];
       window.open(resource.url, '_blank');
       response = [
@@ -383,9 +377,9 @@ const Terminal = () => {
 
    if (bootSequence) {
     return (
-      <div className={`min-h-screen bg-[#121313] text-[#708fff] font-['IBM_Plex_Mono',monospace] p-8 flex flex-col${!bootSequence ? ' animate-fadeout' : ''}`}>
+      <div className={`min-h-screen bg-[#121313] text-[#708fff] font-['IBM_Plex_Mono',monospace] p-4 sm:p-6 lg:p-8 flex flex-col${!bootSequence ? ' animate-fadeout' : ''}`}>
         <div className="flex-1 flex flex-col justify-start items-start w-full">
-          <pre className={`w-full text-left text-base leading-relaxed bg-none m-0 font-['IBM_Plex_Mono',monospace]${!bootSequence ? ' animate-fadeout' : ''}`}>
+          <pre className={`w-full text-left text-xs sm:text-sm md:text-base leading-relaxed bg-none m-0 font-['IBM_Plex_Mono',monospace] overflow-x-auto${!bootSequence ? ' animate-fadeout' : ''}`}>
             {bootMessages.map((line, idx) => (
               <span
                 key={idx}
@@ -395,7 +389,7 @@ const Terminal = () => {
                     : idx === 5
                     ? "text-pink-300"
                     : idx === 7
-                    ? "mb-2 w-full text-left font-bold text-[0.70rem] sm:text-xs md:text-base lg:text-lg gradient-banner select-none drop-shadow leading-[1.05] whitespace-pre-wrap"
+                    ? "mb-2 w-full text-left font-bold text-[0.5rem] xs:text-[0.6rem] sm:text-xs md:text-sm lg:text-base xl:text-lg gradient-banner select-none drop-shadow leading-[1.05] whitespace-pre-wrap"
                     : idx === 9
                     ? "text-[#B5BFE2]"
                     : idx === 11
@@ -432,18 +426,23 @@ const Terminal = () => {
   }
 
   return (
-    <div className="min-h-screen w-full bg-[#121313] text-[#c6d0f5] font-['IBM_Plex_Mono',monospace] p-8 flex flex-col items-start animate-fadein-terminal">
+    <div className="min-h-screen w-full bg-[#121313] text-[#c6d0f5] font-['IBM_Plex_Mono',monospace] p-4 sm:p-6 lg:p-8 flex flex-col items-start animate-fadein-terminal">
       <div
         ref={terminalRef}
-        className="flex-1 overflow-y-auto w-full max-w-[80ch] bg-none"
+        className="flex-1 overflow-y-auto w-full bg-none"
+        style={{ maxWidth: '100%' }}
       >
         {/* Terminal header */}
-        <div className=" mb-4 pb-2 bg-none flex items-center">
-          <span className="text-green-300 font-bold text-base md:text-lg ml-2 tracking-wide">Welcome to our terminal, get some real Developer experience ~/</span>
+        <div className="mb-4 pb-2 bg-none flex items-center">
+          <span className="text-green-300 font-bold text-sm sm:text-base md:text-lg tracking-wide break-words">
+            <span className="hidden sm:inline">Welcome to our terminal, get some real Developer experience ~/</span>
+            <span className="sm:hidden">Welcome to GDG VIT Terminal ~/</span>
+          </span>
         </div>
-        {/* Banner with gradient effect */}
-        <div className="banner-container mb-6">
-          <pre className="banner-text gradient-banner font-bold text-[0.70rem] sm:text-xs md:text-base lg:text-lg select-none drop-shadow leading-[1.05] whitespace-pre-wrap">
+        
+        {/* Banner*/}
+        <div className="banner-container mb-6 overflow-y-hidden overflow-x-auto">
+          <pre className="banner-text gradient-banner font-bold text-[0.5rem] xs:text-[0.6rem] sm:text-xs md:text-sm lg:text-base xl:text-lg select-none drop-shadow leading-[1.05] whitespace-pre min-w-max">
             {gdgBanner}
           </pre>
         </div>
@@ -452,20 +451,23 @@ const Terminal = () => {
         <CommandHistory commandHistory={commandHistory} currentPath={currentPath} />
 
         {/* Current command line */}
-        <div className="flex items-center w-full mt-2">
-          <span className="text-red-400 font-bold">developer@gdgvitm</span>
-          <span className="text-[#c6d0f5] ml-1">:</span>
-          <span className="text-blue-300 font-bold ml-1">{currentPath}</span>
-          <span className="text-[#c6d0f5] ml-2">$</span>
+        <div className="flex flex-wrap items-center w-full mt-2 min-w-0">
+          <div className="flex items-center flex-shrink-0 mr-2 mb-1 sm:mb-0">
+            <span className="text-red-400 font-bold text-sm sm:text-base">developer@gdgvitm</span>
+            <span className="text-[#c6d0f5] ml-1">:</span>
+            <span className="text-blue-300 font-bold ml-1">{currentPath}</span>
+            <span className="text-[#c6d0f5] ml-2">$</span>
+          </div>
           <input
             ref={inputRef}
             type="text"
             value={currentCommand}
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
-            className="bg-transparent border-none outline-none text-[#B5BFE2] font-['IBM_Plex_Mono',monospace] font-medium flex-1 text-base ml-2 focus:outline-[#babbf1] caret-[#f2d5cf] caret-[10px]"
+            className="bg-transparent border-none outline-none text-[#B5BFE2] font-['IBM_Plex_Mono',monospace] font-medium flex-1 min-w-0 text-sm sm:text-base focus:outline-[#babbf1] caret-[#f2d5cf]"
             autoComplete="off"
             spellCheck="false"
+            style={{ minWidth: '120px' }}
           />
         </div>
       </div>
