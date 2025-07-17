@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Banner from './Banner';
-import CommandHistory from './CommandHistory';
-import TerminalFooter from './TerminalFooter';
+import BootScreen from './BootScreen';
+import TerminalMain from './TerminalMain';
+import Commands from './Commands';
 import '../index.css'; 
 
 const Terminal = () => {
@@ -25,6 +25,15 @@ const Terminal = () => {
  ╚═════╝  ╚═════╝   ╚═════╝       ╚═══╝   ╚═╝    ╚═╝   
 `;
 
+  const hackbuildBannerText = `
+██╗  ██╗  █████╗   ██████╗ ██╗  ██╗ ██████╗  ██╗   ██╗ ██╗ ██╗      ██████╗ 
+██║  ██║ ██╔══██╗ ██╔════╝ ██║ ██╔╝ ██╔══██╗ ██║   ██║ ██║ ██║      ██╔══██╗
+███████║ ███████║ ██║      █████╔╝  ██████╔╝ ██║   ██║ ██║ ██║      ██║  ██║
+██╔══██║ ██╔══██║ ██║      ██╔═██╗  ██╔══██╗ ██║   ██║ ██║ ██║      ██║  ██║
+██║  ██║ ██║  ██║ ╚██████╗ ██║  ██╗ ██████╔╝ ╚██████╔╝ ██║ ███████╗ ██████╔╝
+╚═╝  ╚═╝ ╚═╝  ╚═╝  ╚═════╝ ╚═╝  ╚═╝ ╚═════╝   ╚═════╝  ╚═╝ ╚══════╝ ╚═════╝ 
+`;
+
   const bootMessages = [
     'Initializing GDG VIT Terminal...',
     'Loading kernel modules...',
@@ -42,210 +51,127 @@ const Terminal = () => {
     ''
   ];
 
-  const availableCommands = {
-    'gdg help': 'Show available commands',
-    'whoarewe': 'About GDG VIT',
-    'gdg hackbuild': 'Our hackathon',
-    'gdg spectrum': 'Our spectrum of annual events',
-    'gdg socials': 'Connect with us !',
-    'clear': 'Clear terminal',
-    'whoami': 'Current user info',
-    'date': 'Show current date',
-    'cat resources': 'Some resources by our developers which will help you',
-    'gdg contact': 'contact us for collaboration',
-  };
+  const {
+    availableCommands,
+    resourceCommands,
+    socialsList,
+    commandResponses,
+    hackbuildBanner,
+    hackbuildSubcommands,
+  } = Commands();
 
-  // Resource commands with descriptions and links
- const resourceCommands = {
-    'gitsheet': {
-      description: 'Git cheat sheet - Essential Git commands',
-      url: 'https://education.github.com/git-cheat-sheet-education.pdf',
-      info: 'Quick reference for Git version control commands'
-    },
-    'jsguide': {
-      description: 'JavaScript resources to study',
-      url: 'https://www.w3schools.com/js/',
-      info: 'Comprehensive JavaScript tutorial by W3Schools'
-    },
-    'reactdocs': {
-      description: 'React resource to study',
-      url: 'https://www.w3schools.com/react/default.asp',
-      info: 'Easy for beginners to learn React with examples'
-    },
-    'pythonref': {
-      description: 'Python reference guide',
-      url: 'https://docs.python.org/3/tutorial/',
-      info: 'Official Python tutorial and documentation'
-    },
-    'cssguide': {
-      description: 'CSS complete guide',
-      url: 'https://developer.mozilla.org/en-US/docs/Web/CSS',
-      info: 'Complete CSS documentation and tutorials'
-    },
-    'htmlref': {
-      description: 'HTML reference',
-      url: 'https://developer.mozilla.org/en-US/docs/Web/HTML',
-      info: 'HTML elements and attributes reference'
-    },
-    'algorithms': {
-      description: 'Data structures and algorithms',
-      url: 'https://www.programiz.com/dsa',
-      info: 'Comprehensive guide to DSA concepts'
-    },
-    'apidesign': {
-      description: 'REST API design guide',
-      url: 'https://restfulapi.net/',
-      info: 'Best practices for designing REST APIs'
-    },
-    'dockerguide': {
-      description: 'Docker containerization guide',
-      url: 'https://docs.docker.com/get-started/',
-      info: 'Learn containerization with Docker from basics'
-    },
-    'flutterdev': {
-      description: 'Flutter app development',
-      url: 'https://docs.flutter.dev/get-started/install',
-      info: 'Cross-platform mobile app development with Flutter'
-    },
-    'cppref': {
-      description: 'C++ programming reference',
-      url: 'https://www.geeksforgeeks.org/cpp/cpp-tutorial/',
-      info: 'Complete C++ programming tutorial and reference'
-    },
-     'cpalgos': {
-      description: 'Competitive programming algorithms',
-      url: 'https://cp-algorithms.com/navigation.html',
-      info: 'These are some competitive programming algorithms that will help you in your journey',
-    },
-    'computernetworks': {
-      description: 'Computer Networks fundamentals',
-      url: 'https://www.geeksforgeeks.org/computer-network-tutorials/',
-      info: 'Complete guide to networking concepts and protocols'
-    },
-    'dbms': {
-      description: 'Database Management Systems',
-      url: 'https://drive.google.com/file/d/1LOnuwOCraDs69DVJOt7Bq0LxcWxGFXL_/view?usp=sharing',
-      info: 'Quick resource to learn DBMS concepts'
-    },
-    'oops': {
-      description: 'Object Oriented Programming',
-      url: 'https://drive.google.com/file/d/1UaADlGwNFm4si3OmL0Jym7Si4ch8cCbR/view?usp=sharing',
-      info: 'OOP concepts with practical examples'
-    },
-    'operatingsystems': {
-      description: 'Operating Systems concepts',
-      url: 'https://www.geeksforgeeks.org/operating-systems/',
-      info: 'OS fundamentals including processes, memory, and scheduling'
-    },
-     'pgbooks': {
-      description: 'Some programming books',
-      url: 'https://books.goalkicker.com/',
-      info: 'For book nerds, this is a resource to some programming books'
-    },
-  };
+  const [clearCommand, setClearCommand] = useState('');
 
-  const socialsList = [
-     {
-      name: 'Website',
-      className: 'website',
-      url: 'https://gdg-vit-mumbai.vercel.app/',
-      label: 'Twitter: @gdgvit'
-    },
-    {
-      name: 'X',
-      className: 'twitter',
-      url: 'https://twitter.com/gdgvit',
-      label: 'Twitter: @gdgvit'
-    },
-    {
-      name: 'Instagram',
-      className: 'instagram',
-      url: 'https://instagram.com/gdg_vit',
-      label: 'Instagram: @gdg_vit'
-    },
-    {
-      name: 'LinkedIn',
-      className: 'linkedin',
-      url: 'https://www.linkedin.com/company/google-developer-groups-vit-mumbai/',
-      label: 'LinkedIn: /company/gdg-vit'
-    },
-    {
-      name: 'GitHub',
-      className: 'github',
-      url: 'https://github.com/GDGVITM',
-      label: 'GitHub: /gdgvit'
-    },
-     {
-      name: 'Community page',
-      className: 'community',
-      url: 'https://gdg.community.dev/gdg-on-campus-vidyalankar-institute-of-technology-mumbai-india/',
-      label: 'community'
-    },
-  ];
-
-  const commandResponses = {
-    'whoarewe': [
-      'GDG VIT - Google Developer Groups on Campus at VIT Mumbai',
-      '',
-      'Converting ideas into reality 🚀',
-      '',
-      'We are a community of passionate developers, designers, and tech enthusiasts',
-      'dedicated to learning, sharing knowledge, and building amazing projects.',
-      '',
-      'Our mission: Empowering students through technology and innovation.',
-      ''
-    ],
-    'gdg hackbuild': [
-      'We will reveal about it soon ;)',
-      'Something really excitingg !'
-    ],
-    'gdg spectrum': [
-      'Our very own annual fest for cool tech Nerds',
-      'To know more about it, check out here:',
-      <a href="https://spectrum-2025.vercel.app/" className="underline hover:text-pink-300 transition-colors">spectrum.tech</a>
-    ],
-    'gdg socials': [
-      <div key="gdg-socials-list" className="output w-full text-[#c6d0f5] animate-fadein">
-        <span className="font-bold text-pink-300">Follow us on social media:</span>
-        <ul className="links list-none pl-0 mt-2 mb-2">
-          {socialsList.map((social, idx) => (
-            <li key={social.name} className="mb-1 text-[#f2d5cf] font-medium">
-              <a
-                href={social.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline hover:text-pink-300 transition-colors break-all"
-                style={{ color: '#f2d5cf', fontWeight: 500 }}
-              >
-                {social.name}
-              </a>
-            </li>
-          ))}
-        </ul>
+  // Hackbuild subcommand responses
+  const hackbuildResponses = {
+    '--info': [
+      <div key="info" className="output w-full text-[#c6d0f5] animate-fadein">
+        <span key="hackbuild-title" className="font-bold text-pink-300">GDG Hackbuild - The Ultimate Hackathon Experience!</span>
+        <span key="hackbuild-desc" className="text-[#babbf1] block mt-2">Unleash your creativity, solve real-world problems, and win exciting prizes. Join us for a 24-hour coding marathon packed with innovation, learning, and fun!</span>
+        <span key="hackbuild-features" className="text-[#c6d0f5] mt-3 block">
+          <div>🔥 <span className="text-[#a6e3a1]">Features:</span> Exciting challenges, Mentorship, Networking, Prizes</div>
+          <div>🏆 <span className="text-[#a6e3a1]">Prize Pool:</span> ₹50,000+ in cash and goodies</div>
+          <div>📅 <span className="text-[#a6e3a1]">Date:</span> Coming Soon</div>
+          <div>📍 <span className="text-[#a6e3a1]">Venue:</span> VIT Mumbai Campus</div>
+        </span>
       </div>
     ],
-    'whoami': ['You should know who you are !'],
-    'cat resources': [
-      <div key="resources-list" className="output w-full text-[#c6d0f5] animate-fadein">
-        <span className="font-bold text-green-300">📚 Study Resources Commands:</span>
-        <div className="mt-3 mb-3">
-          <div className="text-[#f2d5cf] mb-3">💡 Type any of these commands to access study resources:</div>
-          <ul className="list-none pl-0 mt-2 space-y-1">
-            {Object.entries(resourceCommands).map(([command, resource]) => (
-              <li key={command} className="text-[#c6d0f5] flex flex-col sm:flex-row">
-                <span className="text-blue-300 font-mono font-bold sm:w-36 lg:w-40 flex-shrink-0">{command}</span>
-                <span className="text-[#babbf1] sm:ml-2 mt-1 sm:mt-0"> - {resource.description}</span>
-              </li>
-            ))}
-          </ul>
-          <div className="text-[#f2d5cf] mt-4 text-sm">
-            ✨ Each command opens the resource in a new tab for easy access!
-          </div>
+    '--domains': [
+      <div key="domains" className="output w-full text-[#c6d0f5] animate-fadein">
+        <div className="text-[#f38ba8] font-bold mb-3">🎯 Hackbuild 2025 - Competition Domains</div>
+        <div className="space-y-3">
+          <div className="text-[#a6e3a1]">🌐 Web Development</div>
+          <div className="text-[#c6d0f5] ml-4">Build innovative web applications, platforms, and tools</div>
+          
+          <div className="text-[#a6e3a1]">📱 Mobile Development</div>
+          <div className="text-[#c6d0f5] ml-4">Create cross-platform mobile solutions</div>
+          
+          <div className="text-[#a6e3a1]">🤖 AI/ML</div>
+          <div className="text-[#c6d0f5] ml-4">Develop intelligent systems and machine learning solutions</div>
+          
+          <div className="text-[#a6e3a1]">🔗 Blockchain</div>
+          <div className="text-[#c6d0f5] ml-4">Build decentralized applications and smart contracts</div>
         </div>
       </div>
     ],
-    'date': ['' + new Date().toString(), '(Maybe you should go to one too)'],
-    'gdg contact': ['For collaboration or queries, please reach out to us at:', <a href="mailto:gdgoncampus.vit@gmail.com" className="underline hover:text-pink-300 transition-colors break-all">gdgoncampus.vit@gmail.com</a>],
+    '--registration': [
+      <div key="registration" className="output w-full text-[#c6d0f5] animate-fadein">
+        <div className="text-[#f38ba8] font-bold mb-3">📝 Registration Information</div>
+        <div className="space-y-2">
+          <div className="text-[#f9e2af]">🚀 Registration will open soon!</div>
+          <div className="text-[#c6d0f5]">• Team Size: 2-4 members</div>
+          <div className="text-[#c6d0f5]">• Registration Link: Coming soon...</div>
+          <div className="text-[#a6e3a1] mt-3">Stay tuned to our socials for updates!</div>
+        </div>
+      </div>
+    ],
+    '--rulebook': [
+      <div key="rulebook" className="output w-full text-[#c6d0f5] animate-fadein">
+        <div className="text-[#f38ba8] font-bold mb-3">📋 Hackbuild 2025 - Rules & Guidelines</div>
+        <div className="space-y-3">
+          <div className="text-[#a6e3a1]">🎯 General Rules:</div>
+          
+          <div className="text-[#f9e2af] mt-3">📄 Full rulebook will be available soon!</div>
+        </div>
+      </div>
+    ],
+    '--dates': [
+      <div key="dates" className="output w-full text-[#c6d0f5] animate-fadein">
+        <div className="text-[#f38ba8] font-bold mb-3">📅 Hackbuild 2025 - Important Dates</div>
+        <div className="space-y-2">
+          <div className="text-[#a6e3a1]">📢 Registration Opens: Coming Soon</div>
+          <div className="text-[#a6e3a1]">📝 Registration Closes: TBA</div>
+          <div className="text-[#a6e3a1]">🎯 Problem Statements Release: TBA</div>
+          <div className="text-[#a6e3a1]">🚀 Hackathon Begins: TBA</div>
+          <div className="text-[#a6e3a1]">⏰ Submission Deadline: TBA</div>
+          <div className="text-[#a6e3a1]">🏆 Results & Closing: TBA</div>
+          <div className="text-[#f9e2af] mt-3">📧 Follow our socials for exact dates!</div>
+        </div>
+      </div>
+    ],
+    '--prizes': [
+      <div key="prizes" className="output w-full text-[#c6d0f5] animate-fadein">
+        <div className="text-[#f38ba8] font-bold mb-3">🏆 Hackbuild 2025 - Prize Pool</div>
+        <div className="space-y-3">
+          <div className="text-[#f9e2af]">💰 Total Prize Pool: ₹25,000+</div>
+          
+        </div>
+      </div>
+    ],
+    '--timeline': [
+      <div key="timeline" className="output w-full text-[#c6d0f5] animate-fadein">
+        <div className="text-[#f38ba8] font-bold mb-3">⏰ Hackbuild 2025 - Event Timeline</div>
+        <div className="space-y-3">
+          <div className="text-[#a6e3a1]">We will let you know soon ;)</div>
+        </div>
+      </div>
+    ],
+    '--sponsors': [
+      <div key="sponsors" className="output w-full text-[#c6d0f5] animate-fadein">
+        <div className="text-[#f38ba8] font-bold mb-3">🤝 Hackbuild 2025 - Sponsors & Partners</div>
+        <div className="space-y-3">
+          <div className="text-[#a6e3a1]">🏢 Title Sponsor:</div>
+          <div className="text-[#c6d0f5] ml-4">• Coming Soon...</div>
+          
+          <div className="text-[#a6e3a1]">💼 Gold Sponsors:</div>
+          <div className="text-[#c6d0f5] ml-4">• To be announced</div>
+          
+          <div className="text-[#a6e3a1]">🥈 Silver Sponsors:</div>
+          <div className="text-[#c6d0f5] ml-4">• To be announced</div>
+          
+          <div className="text-[#a6e3a1]">🤝 Community Partners:</div>
+          <div className="text-[#c6d0f5] ml-4">• Google Developer Groups</div>
+          <div className="text-[#c6d0f5] ml-4">• VIT Mumbai</div>
+          
+          <div className="text-[#f9e2af] mt-3">📞 Want to sponsor? Contact us at:</div>
+          <div className="text-[#c6d0f5] ml-4">
+            <a href="mailto:gdgoncampus.vit@gmail.com" className="underline hover:text-pink-300 transition-colors">
+              gdgoncampus.vit@gmail.com
+            </a>
+          </div>
+        </div>
+      </div>
+    ]
   };
 
   useEffect(() => {
@@ -296,6 +222,56 @@ const Terminal = () => {
     } else if (baseCommand === 'clear') {
       setCommandHistory([]);
       return;
+    } else if (baseCommand === 'gdg hackbuild') {
+      if (args.length === 2) {
+        // Main hackbuild command without showing the banner
+        response = [
+          <div key="hackbuild-main" className="output w-full text-[#c6d0f5] animate-fadein">
+            <span key="hackbuild-title" className="font-bold text-pink-300">GDG Hackbuild - The Ultimate Hackathon Experience!</span>
+            <span key="hackbuild-desc" className="text-[#babbf1] block mt-2">Type 'gdg hackbuild info' to see complete information about our upcoming hackathon.</span>
+            <span key="hackbuild-subcmds" className="block mt-3 text-green-300 font-semibold">Available subcommands:</span>
+            <ul key="hackbuild-list" className="list-none pl-0 mt-2 space-y-1">
+              <li className="text-[#c6d0f5] flex flex-col sm:flex-row">
+                <span className="text-blue-300 font-mono font-bold sm:w-56 flex-shrink-0">info</span>
+                <span className="text-[#babbf1] sm:ml-2 mt-1 sm:mt-0"> - View complete hackathon information</span>
+              </li>
+              {hackbuildSubcommands.map(({ cmd, desc }) => (
+                <li key={cmd} className="text-[#c6d0f5] flex flex-col sm:flex-row">
+                  <span className="text-blue-300 font-mono font-bold sm:w-56 flex-shrink-0">{cmd}</span>
+                  <span className="text-[#babbf1] sm:ml-2 mt-1 sm:mt-0"> - {desc}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ];
+      } else if (args[2] === '--info') {
+        response = hackbuildResponses['info'];
+      } else if (args[2] === '--domains') {
+        response = hackbuildResponses['--domains'];
+      } else if (args[2] === '--registration') {
+        response = hackbuildResponses['--registration'];
+      } else if (args[2] === '--rulebook') {
+        response = hackbuildResponses['--rulebook'];
+      } else if (args[2] === '--dates') {
+        response = hackbuildResponses['--dates'];
+      } else if (args[2] === '--prizes') {
+        response = hackbuildResponses['--prizes'];
+      } else if (args[2] === '--timeline') {
+        response = hackbuildResponses['--timeline'];
+      } else if (args[2] === '--sponsors') {
+        response = hackbuildResponses['--sponsors'];
+      } else if (args[2] === '--info') {
+        // For backward compatibility
+        response = hackbuildResponses['info'];
+        response.push(<span key="deprecated-notice" className="text-yellow-300 mt-2">Note: The '--info' flag is deprecated. Please use 'gdg hackbuild info' instead.</span>);
+      } else {
+        response = [
+          <div key="unknown-cmd" className="output text-red-300 animate-fadein">
+            Unknown subcommand for 'gdg hackbuild'.
+            <span className="block">Type 'gdg hackbuild' to see available subcommands.</span>
+          </div>
+        ];
+      }
     } else if (baseCommand === 'gdg help') {
       response = [
         'Available commands:',
@@ -377,104 +353,22 @@ const Terminal = () => {
 
    if (bootSequence) {
     return (
-      <div className={`min-h-screen bg-[#121313] text-[#708fff] font-['IBM_Plex_Mono',monospace] p-4 sm:p-6 lg:p-8 flex flex-col${!bootSequence ? ' animate-fadeout' : ''}`}>
-        <div className="flex-1 flex flex-col justify-start items-start w-full">
-          <pre className={`w-full text-left text-xs sm:text-sm md:text-base leading-relaxed bg-none m-0 font-['IBM_Plex_Mono',monospace] overflow-x-auto${!bootSequence ? ' animate-fadeout' : ''}`}>
-            {bootMessages.map((line, idx) => (
-              <span
-                key={idx}
-                className={
-                  idx === 0
-                    ? "text-blue-300"
-                    : idx === 5
-                    ? "text-pink-300"
-                    : idx === 7
-                    ? "mb-2 w-full text-left font-bold text-[0.5rem] xs:text-[0.6rem] sm:text-xs md:text-sm lg:text-base xl:text-lg gradient-banner select-none drop-shadow leading-[1.05] whitespace-pre-wrap"
-                    : idx === 9
-                    ? "text-[#B5BFE2]"
-                    : idx === 11
-                    ? "text-[#f2d5cf]"
-                    : "text-[#c6d0f5]"
-                }
-                style={{
-                  display: "block",
-                  fontWeight: idx === 7 ? 700 : 500,
-                  animation: `fade 2s ${idx * 0.13 + 0.2}s both`
-                }}
-              >
-                {line}
-              </span>
-            ))}
-          </pre>
-        </div>
-        <style>{`
-          @keyframes fade {
-            0% { opacity: 0}
-            50% { opacity: 0; }
-            100% { opacity: 1; }
-          }
-          @keyframes fadeout {
-            from { opacity: 1; }
-            to { opacity: 0; }
-          }
-          .animate-fadeout {
-            animation: fadeout 0.8s ease-in 0.1s forwards;
-          }
-        `}</style>
-      </div>
+      <BootScreen bootMessages={bootMessages} gdgBanner={gdgBanner} />
     );
   }
 
   return (
-    <div className="min-h-screen w-full bg-[#121313] text-[#c6d0f5] font-['IBM_Plex_Mono',monospace] p-4 sm:p-6 lg:p-8 flex flex-col items-start animate-fadein-terminal">
-      <div
-        ref={terminalRef}
-        className="flex-1 overflow-y-auto w-full bg-none"
-        style={{ maxWidth: '100%' }}
-      >
-        {/* Terminal header */}
-        <div className="mb-4 pb-2 bg-none flex items-center">
-          <span className="text-green-300 font-bold text-sm sm:text-base md:text-lg tracking-wide break-words">
-            <span className="hidden sm:inline">Welcome to our terminal, get some real Developer experience ~/</span>
-            <span className="sm:hidden">Welcome to GDG VIT Terminal ~/</span>
-          </span>
-        </div>
-        
-        {/* Banner*/}
-        <div className="banner-container mb-6 overflow-y-hidden overflow-x-auto">
-          <pre className="banner-text gradient-banner font-bold text-[0.5rem] xs:text-[0.6rem] sm:text-xs md:text-sm lg:text-base xl:text-lg select-none drop-shadow leading-[1.05] whitespace-pre min-w-max">
-            {gdgBanner}
-          </pre>
-        </div>
-
-        {/* Command history */}
-        <CommandHistory commandHistory={commandHistory} currentPath={currentPath} />
-
-        {/* Current command line */}
-        <div className="flex flex-wrap items-center w-full mt-2 min-w-0">
-          <div className="flex items-center flex-shrink-0 mr-2 mb-1 sm:mb-0">
-            <span className="text-red-400 font-bold text-sm sm:text-base">developer@gdgvitm</span>
-            <span className="text-[#c6d0f5] ml-1">:</span>
-            <span className="text-blue-300 font-bold ml-1">{currentPath}</span>
-            <span className="text-[#c6d0f5] ml-2">$</span>
-          </div>
-          <input
-            ref={inputRef}
-            type="text"
-            value={currentCommand}
-            onChange={handleInputChange}
-            onKeyDown={handleKeyDown}
-            className="bg-transparent border-none outline-none text-[#B5BFE2] font-['IBM_Plex_Mono',monospace] font-medium flex-1 min-w-0 text-sm sm:text-base focus:outline-[#babbf1] caret-[#f2d5cf]"
-            autoComplete="off"
-            spellCheck="false"
-            style={{ minWidth: '120px' }}
-          />
-        </div>
-      </div>
-
-      {/* Footer */}
-      <TerminalFooter />
-    </div>
+    <TerminalMain
+      terminalRef={terminalRef}
+      inputRef={inputRef}
+      gdgBanner={gdgBanner}
+      hackbuildBanner={hackbuildBannerText}
+      commandHistory={commandHistory}
+      currentPath={currentPath}
+      currentCommand={currentCommand}
+      handleInputChange={handleInputChange}
+      handleKeyDown={handleKeyDown}
+    />
   );
 };
 

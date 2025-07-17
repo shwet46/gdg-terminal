@@ -120,6 +120,21 @@
   }
 }
 
+/* Green Gradient Banner for Hackbuild */
+.gradient-hackbuild-banner {
+  background: linear-gradient(
+    90deg,
+    #22c55e 0%,
+    #4ade80 40%,
+    #bbf7d0 100%
+  );
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 3s ease-in-out infinite;
+}
+
 /* Animation Classes */
 .animate-fade {
   animation: fade 2s;
