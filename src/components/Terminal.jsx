@@ -223,61 +223,47 @@ const Terminal = () => {
       setCommandHistory([]);
       return;
     } else if (baseCommand === 'gdg hackbuild') {
-      if (args.length === 2) {
-        // Main hackbuild command without showing the banner
-        response = [
-          <div key="hackbuild-main" className="output w-full text-[#c6d0f5] animate-fadein">
-            <span key="hackbuild-title" className="font-bold text-pink-300">GDG Hackbuild - The Ultimate Hackathon Experience!</span>
-            <span key="hackbuild-desc" className="text-[#babbf1] block mt-2">Type 'gdg hackbuild info' to see complete information about our upcoming hackathon.</span>
-            <span key="hackbuild-subcmds" className="block mt-3 text-green-300 font-semibold">Available subcommands:</span>
-            <ul key="hackbuild-list" className="list-none pl-0 mt-2 space-y-1">
-              <li className="text-[#c6d0f5] flex flex-col sm:flex-row">
-                <span className="text-blue-300 font-mono font-bold sm:w-56 flex-shrink-0">info</span>
-                <span className="text-[#babbf1] sm:ml-2 mt-1 sm:mt-0"> - View complete hackathon information</span>
-              </li>
-              {hackbuildSubcommands.map(({ cmd, desc }) => (
-                <li key={cmd} className="text-[#c6d0f5] flex flex-col sm:flex-row">
-                  <span className="text-blue-300 font-mono font-bold sm:w-56 flex-shrink-0">{cmd}</span>
-                  <span className="text-[#babbf1] sm:ml-2 mt-1 sm:mt-0"> - {desc}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ];
-      } else if (args[2] === '--info') {
-        response = hackbuildResponses['info'];
-      } else if (args[2] === '--domains') {
-        response = hackbuildResponses['--domains'];
-      } else if (args[2] === '--registration') {
-        response = hackbuildResponses['--registration'];
-      } else if (args[2] === '--rulebook') {
-        response = hackbuildResponses['--rulebook'];
-      } else if (args[2] === '--dates') {
-        response = hackbuildResponses['--dates'];
-      } else if (args[2] === '--prizes') {
-        response = hackbuildResponses['--prizes'];
-      } else if (args[2] === '--timeline') {
-        response = hackbuildResponses['--timeline'];
-      } else if (args[2] === '--sponsors') {
-        response = hackbuildResponses['--sponsors'];
-      } else if (args[2] === '--info') {
-        // For backward compatibility
-        response = hackbuildResponses['info'];
-        response.push(<span key="deprecated-notice" className="text-yellow-300 mt-2">Note: The '--info' flag is deprecated. Please use 'gdg hackbuild info' instead.</span>);
-      } else {
-        response = [
-          <div key="unknown-cmd" className="output text-red-300 animate-fadein">
-            Unknown subcommand for 'gdg hackbuild'.
-            <span className="block">Type 'gdg hackbuild' to see available subcommands.</span>
-          </div>
-        ];
-      }
+      // Use the handler from HackbuildCommands
+      response = handleHackbuildCommand(args.slice(2));
     } else if (baseCommand === 'gdg help') {
       response = [
-        'Available commands:',
-        '',
-        ...Object.entries(availableCommands).map(([cmd, desc]) => `${cmd.padEnd(16)} - ${desc}`),
-        ''
+        <div key="help-main" className="output w-full text-[#c6d0f5] animate-fadein">
+          <div className="text-[#f38ba8] font-bold mb-4 text-xl">📚 GDG VIT Terminal - Available Commands</div>
+          
+          <div className="space-y-4">
+            <div className="text-[#a6e3a1] font-semibold text-lg">🚀 General Commands:</div>
+            <div className="grid gap-2 ml-4">
+              {Object.entries(availableCommands).map(([cmd, desc]) => (
+                <div key={cmd} className="flex flex-col sm:flex-row text-[#c6d0f5]">
+                  <span className="text-blue-300 font-mono font-bold sm:w-48 flex-shrink-0">{cmd}</span>
+                  <span className="text-[#babbf1] sm:ml-4 mt-1 sm:mt-0">- {desc}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="text-[#a6e3a1] font-semibold text-lg mt-6">🔧 Special Commands:</div>
+            <div className="grid gap-2 ml-4">
+              <div className="flex flex-col sm:flex-row text-[#c6d0f5]">
+                <span className="text-blue-300 font-mono font-bold sm:w-48 flex-shrink-0">clear</span>
+                <span className="text-[#babbf1] sm:ml-4 mt-1 sm:mt-0">- Clear the terminal screen</span>
+              </div>
+              <div className="flex flex-col sm:flex-row text-[#c6d0f5]">
+                <span className="text-blue-300 font-mono font-bold sm:w-48 flex-shrink-0">gdg hackbuild</span>
+                <span className="text-[#babbf1] sm:ml-4 mt-1 sm:mt-0">- Access Hackbuild hackathon information</span>
+              </div>
+            </div>
+
+            <div className="text-[#f9e2af] mt-6 p-3 border-l-4 border-[#f9e2af] bg-[#f9e2af]/10 rounded-r">
+              <div className="font-semibold">💡 Pro Tips:</div>
+              <div className="mt-2 space-y-1 text-sm">
+                <div>• Use arrow keys (↑/↓) to navigate command history</div>
+                <div>• Type 'gdg hackbuild' to explore our upcoming hackathon</div>
+                <div>• All links open in new tabs automatically</div>
+                <div>• Commands are case-insensitive</div>
+              </div>
+            </div>
+          </div>
+        </div>
       ];
     } else if (baseCommand === 'gdg cat') {
       if (args[2] === 'README.txt') {
