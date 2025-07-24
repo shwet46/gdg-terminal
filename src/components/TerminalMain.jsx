@@ -2,7 +2,6 @@ import TerminalHeader from './TerminalHeader';
 import TerminalBanner from './TerminalBanner';
 import CommandHistory from './CommandHistory';
 import TerminalInput from './TerminalInput';
-import TerminalFooter from './TerminalFooter';
 
 const TerminalMain = ({
   terminalRef,
@@ -31,7 +30,6 @@ const TerminalMain = ({
         currentPath={currentPath}
       />
     </div>
-    <TerminalFooter />
   </div>
 );
 
