@@ -1,4 +1,3 @@
-import React from 'react';
 import TerminalHeader from './TerminalHeader';
 import TerminalBanner from './TerminalBanner';
 import CommandHistory from './CommandHistory';
@@ -8,7 +7,6 @@ import TerminalFooter from './TerminalFooter';
 const TerminalMain = ({
   terminalRef,
   inputRef,
-  gdgBanner,
   hackbuildBanner,
   commandHistory,
   currentPath,

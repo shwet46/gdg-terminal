@@ -30,7 +30,6 @@ const TerminalFooter = () => (
         </p>
       </div>
 
-      {/* Enhanced copyright with terminal styling */}
       <div className="flex items-center justify-between pt-3 border-t border-[#626880]/20">
         <p className="text-xs text-[#626880] font-mono">
           <span className="text-[#bb9af7]">©</span> 2025 

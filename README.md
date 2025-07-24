@@ -1,8 +1,4 @@
-# 🚀 GDG VIT Terminal
-
-A fully responsive, interactive terminal-style interface for the Google Developer Group - VIT Mumbai community. Built with React and styled with Tailwind CSS to provide an authentic Linux terminal experience.
-
-
+# Terminal style website </>
 
 ## Getting Started
 
@@ -11,8 +7,8 @@ A fully responsive, interactive terminal-style interface for the Google Develope
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/GDGVITM/gdg-vit-terminal.git
-cd gdg-vit-terminal
+git clone https://github.com/shwet46/gdg-terminal.git
+cd gdg-terminal
 ```
 
 2. **Install dependencies**

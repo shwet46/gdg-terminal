@@ -106,7 +106,7 @@ const Commands = () => {
     {
       name: 'Website',
       className: 'website',
-      url: 'https://gdg-vit-mumbai.vercel.app/',
+      url: 'https://gdgvitm.tech/',
       label: 'Twitter: @gdgvit'
     },
     {
@@ -160,7 +160,7 @@ const Commands = () => {
     'gdg spectrum': [
       'Our very own annual fest for cool tech Nerds',
       'To know more about it, check out here:',
-      <a href="https://spectrum-2025.vercel.app/" className="underline hover:text-pink-300 transition-colors">spectrum.tech</a>
+      <a href="https://spectrum.gdgvitm.tech/" className="underline hover:text-pink-300 transition-colors">spectrum.gdgvitm.tech</a>
     ],
     'gdg socials': [
       <div key="gdg-socials-list" className="output w-full text-[#c6d0f5] animate-fadein">

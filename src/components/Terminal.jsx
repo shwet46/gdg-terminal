@@ -228,10 +228,10 @@ const Terminal = () => {
     } else if (baseCommand === 'gdg help') {
       response = [
         <div key="help-main" className="output w-full text-[#c6d0f5] animate-fadein">
-          <div className="text-[#f38ba8] font-bold mb-4 text-xl">📚 GDG VIT Terminal - Available Commands</div>
+          <div className="text-[#f38ba8] font-bold mb-4 text-xl">GDG VIT Terminal - Available Commands</div>
           
           <div className="space-y-4">
-            <div className="text-[#a6e3a1] font-semibold text-lg">🚀 General Commands:</div>
+            <div className="text-[#a6e3a1] font-semibold text-lg">General Commands:</div>
             <div className="grid gap-2 ml-4">
               {Object.entries(availableCommands).map(([cmd, desc]) => (
                 <div key={cmd} className="flex flex-col sm:flex-row text-[#c6d0f5]">
@@ -241,7 +241,7 @@ const Terminal = () => {
               ))}
             </div>
 
-            <div className="text-[#a6e3a1] font-semibold text-lg mt-6">🔧 Special Commands:</div>
+            <div className="text-[#a6e3a1] font-semibold text-lg mt-6">Special Commands:</div>
             <div className="grid gap-2 ml-4">
               <div className="flex flex-col sm:flex-row text-[#c6d0f5]">
                 <span className="text-blue-300 font-mono font-bold sm:w-48 flex-shrink-0">clear</span>
@@ -253,15 +253,12 @@ const Terminal = () => {
               </div>
             </div>
 
-            <div className="text-[#f9e2af] mt-6 p-3 border-l-4 border-[#f9e2af] bg-[#f9e2af]/10 rounded-r">
-              <div className="font-semibold">💡 Pro Tips:</div>
-              <div className="mt-2 space-y-1 text-sm">
-                <div>• Use arrow keys (↑/↓) to navigate command history</div>
-                <div>• Type 'gdg hackbuild' to explore our upcoming hackathon</div>
-                <div>• All links open in new tabs automatically</div>
-                <div>• Commands are case-insensitive</div>
-              </div>
-            </div>
+          <div className="text-[#f38ba8] mt-4 mb-2">NOTES:</div>
+          <div className="ml-2 text-[#babbf1] space-y-1">
+            <div>Use arrow keys (↑/↓) to navigate command history</div>
+            <div>Commands are case-insensitive</div>
+            <div>External links open in new tabs</div>
+          </div>
           </div>
         </div>
       ];
