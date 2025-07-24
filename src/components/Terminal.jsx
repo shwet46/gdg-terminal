@@ -3,7 +3,6 @@ import BootScreen from './BootScreen';
 import TerminalMain from './TerminalMain';
 import Commands from './Commands';
 import HackbuildCommands from './HackbuildCommands';
-import '../styles/themes.css';
 import '../index.css'; 
 
 const Terminal = () => {
@@ -15,7 +14,6 @@ const Terminal = () => {
   const [bootSequence, setBootSequence] = useState(true);
   const [bootText, setBootText] = useState('');
   const [historyIndex, setHistoryIndex] = useState(null);
-  const [currentTheme, setCurrentTheme] = useState('catppuccin');
   const inputRef = useRef(null);
   const terminalRef = useRef(null);
 
@@ -67,16 +65,6 @@ const Terminal = () => {
     hackbuildBannerText,
     handleHackbuildCommand
   } = HackbuildCommands();
-
-  // Theme names mapping
-  const themeNames = {
-    catppuccin: 'Catppuccin Mocha',
-    matrix: 'Matrix Green',
-    dracula: 'Dracula',
-    cyberpunk: 'Cyberpunk Neon',
-    ocean: 'Ocean Blue',
-    monokai: 'Monokai Pro'
-  };
 
   const [clearCommand, setClearCommand] = useState('');
 
@@ -228,68 +216,6 @@ const Terminal = () => {
     return () => document.removeEventListener('click', handleClick);
   }, [bootSequence]);
 
-  // Apply theme class to document body
-  useEffect(() => {
-    document.body.className = `theme-${currentTheme}`;
-    document.documentElement.className = `theme-${currentTheme}`;
-  }, [currentTheme]);
-
-  // Theme switching function
-  const handleThemeChange = (themeName) => {
-    if (themeNames[themeName]) {
-      setCurrentTheme(themeName);
-      return [
-        `Theme changed to: ${themeNames[themeName]}`,
-        `Applied ${themeNames[themeName]} color scheme`,
-        ''
-      ];
-    } else {
-      return [
-        `Theme '${themeName}' not found.`,
-        'Available themes: ' + Object.keys(themeNames).join(', '),
-        ''
-      ];
-    }
-  };
-
-  // Display available themes
-  const displayThemes = () => {
-    return [
-      <div key="themes-list" className="output w-full animate-fadein terminal-text">
-        <div className="terminal-accent font-bold mb-4 text-xl">Available Themes</div>
-        
-        <div className="space-y-3">
-          <div className="terminal-secondary font-semibold">Current Theme: {themeNames[currentTheme]}</div>
-          
-          <div className="grid gap-3 ml-4">
-            {Object.entries(themeNames).map(([key, name]) => (
-              <div key={key} className="flex flex-col sm:flex-row items-start">
-                <div className="flex items-center space-x-3">
-                  <span className="terminal-command font-mono font-bold sm:w-24 flex-shrink-0">
-                    {key}
-                  </span>
-                  <span className="terminal-muted">- {name}</span>
-                </div>
-                {key === currentTheme && (
-                  <span className="terminal-accent ml-2 text-sm">
-                    (active)
-                  </span>
-                )}
-              </div>
-            ))}
-          </div>
-
-          <div className="terminal-accent mt-4 mb-2">Usage:</div>
-          <div className="ml-2 space-y-1 terminal-muted">
-            <div><span className="terminal-command font-mono">theme set &lt;theme-name&gt;</span> - Change to a specific theme</div>
-            <div><span className="terminal-command font-mono">theme list</span> - Show this list</div>
-            <div><span className="terminal-command font-mono">theme current</span> - Show current theme</div>
-          </div>
-        </div>
-      </div>
-    ];
-  };
-
   const handleCommand = (cmd) => {
     const command = cmd.trim().toLowerCase();
     const args = command.split(' ');
@@ -302,66 +228,41 @@ const Terminal = () => {
     } else if (baseCommand === 'clear') {
       setCommandHistory([]);
       return;
-    } else if (args[0] === 'theme') {
-      if (args[1] === 'list' || args[1] === undefined) {
-        response = displayThemes();
-      } else if (args[1] === 'current') {
-        response = [
-          `Current theme: ${themeNames[currentTheme]} (${currentTheme})`,
-          ''
-        ];
-      } else if (args[1] === 'set' && args[2]) {
-        response = handleThemeChange(args[2]);
-      } else if (themeNames[args[1]]) {
-        response = handleThemeChange(args[1]);
-      } else {
-        response = [
-          'Invalid theme command.',
-          'Usage: theme [list|current|set <theme-name>]',
-          'Available themes: ' + Object.keys(themeNames).join(', '),
-          ''
-        ];
-      }
     } else if (baseCommand === 'gdg hackbuild') {
       response = handleHackbuildCommand(args.slice(2));
     } else if (baseCommand === 'gdg help') {
       response = [
-        <div key="help-main" className="output w-full animate-fadein terminal-text">
-          <div className="terminal-accent font-bold mb-4 text-xl">GDG VIT Terminal - Available Commands</div>
+        <div key="help-main" className="output w-full animate-fadein text-[#c6d0f5]">
+          <div className="text-[#f38ba8] font-bold mb-4 text-xl">GDG VIT Terminal - Available Commands</div>
           
           <div className="space-y-4">
-            <div className="terminal-secondary font-semibold text-lg">General Commands:</div>
+            <div className="text-[#fab387] font-semibold text-lg">General Commands:</div>
             <div className="grid gap-2 ml-4">
               {Object.entries(availableCommands).map(([cmd, desc]) => (
                 <div key={cmd} className="flex flex-col sm:flex-row">
-                  <span className="terminal-command font-mono font-bold sm:w-48 flex-shrink-0">{cmd}</span>
-                  <span className="terminal-muted sm:ml-4 mt-1 sm:mt-0">- {desc}</span>
+                  <span className="text-[#a6e3a1] font-mono font-bold sm:w-48 flex-shrink-0">{cmd}</span>
+                  <span className="text-[#6c7086] sm:ml-4 mt-1 sm:mt-0">- {desc}</span>
                 </div>
               ))}
             </div>
 
-            <div className="terminal-secondary font-semibold text-lg mt-6">Special Commands:</div>
+            <div className="text-[#fab387] font-semibold text-lg mt-6">Special Commands:</div>
             <div className="grid gap-2 ml-4">
               <div className="flex flex-col sm:flex-row">
-                <span className="terminal-command font-mono font-bold sm:w-48 flex-shrink-0">clear</span>
-                <span className="terminal-muted sm:ml-4 mt-1 sm:mt-0">- Clear the terminal screen</span>
+                <span className="text-[#a6e3a1] font-mono font-bold sm:w-48 flex-shrink-0">clear</span>
+                <span className="text-[#6c7086] sm:ml-4 mt-1 sm:mt-0">- Clear the terminal screen</span>
               </div>
               <div className="flex flex-col sm:flex-row">
-                <span className="terminal-command font-mono font-bold sm:w-48 flex-shrink-0">theme</span>
-                <span className="terminal-muted sm:ml-4 mt-1 sm:mt-0">- Change terminal themes</span>
-              </div>
-              <div className="flex flex-col sm:flex-row">
-                <span className="terminal-command font-mono font-bold sm:w-48 flex-shrink-0">gdg hackbuild</span>
-                <span className="terminal-muted sm:ml-4 mt-1 sm:mt-0">- Access Hackbuild hackathon information</span>
+                <span className="text-[#a6e3a1] font-mono font-bold sm:w-48 flex-shrink-0">gdg hackbuild</span>
+                <span className="text-[#6c7086] sm:ml-4 mt-1 sm:mt-0">- Access Hackbuild hackathon information</span>
               </div>
             </div>
 
-          <div className="terminal-accent mt-4 mb-2">NOTES:</div>
-          <div className="ml-2 space-y-1 terminal-muted">
+          <div className="text-[#f38ba8] mt-4 mb-2">NOTES:</div>
+          <div className="ml-2 space-y-1 text-[#6c7086]">
             <div>Use arrow keys (↑/↓) to navigate command history</div>
             <div>Commands are case-insensitive</div>
             <div>External links open in new tabs</div>
-            <div>Type 'theme' to see available color schemes</div>
           </div>
           </div>
         </div>
@@ -400,8 +301,7 @@ const Terminal = () => {
     const newEntry = {
       command: cmd,
       response: response,
-      timestamp: Date.now(),
-      theme: currentTheme
+      timestamp: Date.now()
     };
 
     setCommandHistory(prev => [...prev, newEntry]);
@@ -456,7 +356,6 @@ const Terminal = () => {
       currentCommand={currentCommand}
       handleInputChange={handleInputChange}
       handleKeyDown={handleKeyDown}
-      currentTheme={currentTheme}
     />
   );
 };

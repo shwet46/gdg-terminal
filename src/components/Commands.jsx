@@ -160,20 +160,20 @@ const Commands = () => {
     'gdg spectrum': [
       'Our very own annual fest for cool tech Nerds',
       'To know more about it, check out here:',
-      <a href="https://spectrum.gdgvitm.tech/" className="underline hover:text-pink-300 transition-colors">spectrum.gdgvitm.tech</a>
+      <a href="https://spectrum.gdgvitm.tech/" className="underline hover:text-[#f38ba8] transition-colors">spectrum.gdgvitm.tech</a>
     ],
     'gdg socials': [
       <div key="gdg-socials-list" className="output w-full text-[#c6d0f5] animate-fadein">
-        <span className="font-bold text-pink-300">Follow us on social media:</span>
+        <span className="font-bold text-[#f38ba8]">Follow us on social media:</span>
         <ul className="links list-none pl-0 mt-2 mb-2">
           {socialsList.map((social, idx) => (
-            <li key={social.name} className="mb-1 text-[#f2d5cf] font-medium">
+            <li key={social.name} className="mb-1 text-[#c6d0f5] font-medium">
               <a
                 href={social.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline hover:text-pink-300 transition-colors break-all"
-                style={{ color: '#f2d5cf', fontWeight: 500 }}
+                className="underline hover:text-[#f38ba8] transition-colors break-all"
+                style={{ color: '#c6d0f5', fontWeight: 500 }}
               >
                 {social.name}
               </a>
@@ -185,25 +185,25 @@ const Commands = () => {
     'whoami': ['You should know who you are !'],
     'cat resources': [
       <div key="resources-list" className="output w-full text-[#c6d0f5] animate-fadein">
-        <span className="font-bold text-green-300">📚 Study Resources Commands:</span>
+        <span className="font-bold text-[#a6e3a1]">📚 Study Resources Commands:</span>
         <div className="mt-3 mb-3">
-          <div className="text-[#f2d5cf] mb-3">💡 Type any of these commands to access study resources:</div>
+          <div className="text-[#c6d0f5] mb-3">💡 Type any of these commands to access study resources:</div>
           <ul className="list-none pl-0 mt-2 space-y-1">
             {Object.entries(resourceCommands).map(([command, resource]) => (
               <li key={command} className="text-[#c6d0f5] flex flex-col sm:flex-row">
-                <span className="text-blue-300 font-mono font-bold sm:w-36 lg:w-40 flex-shrink-0">{command}</span>
-                <span className="text-[#babbf1] sm:ml-2 mt-1 sm:mt-0"> - {resource.description}</span>
+                <span className="text-[#a6e3a1] font-mono font-bold sm:w-36 lg:w-40 flex-shrink-0">{command}</span>
+                <span className="text-[#6c7086] sm:ml-2 mt-1 sm:mt-0"> - {resource.description}</span>
               </li>
             ))}
           </ul>
-          <div className="text-[#f2d5cf] mt-4 text-sm">
+          <div className="text-[#c6d0f5] mt-4 text-sm">
             ✨ Each command opens the resource in a new tab for easy access!
           </div>
         </div>
       </div>
     ],
     'date': ['' + new Date().toString(), '(Maybe you should go to one too)'],
-    'gdg contact': ['For collaboration or queries, please reach out to us at:', <a href="mailto:gdgoncampus.vit@gmail.com" className="underline hover:text-pink-300 transition-colors break-all">gdgoncampus.vit@gmail.com</a>],
+    'gdg contact': ['For collaboration or queries, please reach out to us at:', <a href="mailto:gdgoncampus.vit@gmail.com" className="underline hover:text-[#f38ba8] transition-colors break-all">gdgoncampus.vit@gmail.com</a>],
   };
 
   const hackbuildBanner = `
