@@ -50,7 +50,8 @@ const Terminal = () => {
     '',
     'Type "gdg help" to see available commands.',
     '',
-    'Btw, Made by Shweta <3'
+    'Made with high dose of caffeine by Shweta <3',
+    'still terminal is processing....',
   ];
 
   const {

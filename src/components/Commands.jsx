@@ -2,17 +2,17 @@ import React from 'react';
 
 const Commands = () => {
   const availableCommands = {
-    'gdg help': 'Show available commands',
-    'whoarewe': 'About GDG VIT',
-    'gdg hackbuild': 'Our hackathon',
-    'gdg spectrum': 'Fest for cool tech nerds ^_~',
-    'gdg socials': 'Connect with us !',
-    'clear': 'Clear terminal, Whooshhh !',
-    'whoami': 'know yourself',
-    'date': 'If you forgot the date',
-    'cat resources': 'Some resources by our developers which will help you (⌐■_■) !!',
-    'gdg contact': 'contact us for collaboration (〃￣︶￣)人(￣︶￣〃)',
-  };
+  'gdg help': "Because clearly, you need it (¬_¬)ﾉ",
+  'whoarewe': "About GDG VIT — yes, we’re real (ಠ‿↼)",
+  'gdg hackbuild': "Our hackathon. Sleep is optional (￣o￣) zzZ",
+  'gdg spectrum': "Fest for cool tech nerds (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧",
+  'gdg socials': "Stalk us online, we dare you (¬‿¬)",
+  'clear': "Whooshhh~ everything’s gone (ﾉ≧ڡ≦)",
+  'whoami': "You seriously don’t know? (＠_＠;)",
+  'date': "Forgot again? Fine… (¬д¬。)",
+  'cat resources': "Cool dev resources, don’t waste them (⌐■_■)",
+  'gdg contact': "Collab with us! (〃￣︶￣)人(￣︶￣〃)",
+};
 
   const resourceCommands = {
     'gitsheet': {
@@ -182,7 +182,7 @@ const Commands = () => {
         </ul>
       </div>
     ],
-    'whoami': ['You should know who you are :-)'],
+    'whoami': ['You should know who you are :-) (¬‿¬)'],
     'cat resources': [
       <div key="resources-list" className="output w-full text-[#c6d0f5] animate-fadein">
         <span className="font-bold text-[#a6e3a1]">📚 Study Resources Commands:</span>
