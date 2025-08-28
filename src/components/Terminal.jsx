@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import BootScreen from './BootScreen';
 import TerminalMain from './TerminalMain';
 import Commands from './Commands';
-import HackbuildCommands from './HackbuildCommands';
 import '../index.css'; 
 
 const Terminal = () => {
@@ -26,14 +25,6 @@ const Terminal = () => {
  ╚═════╝  ╚═════╝   ╚═════╝       ╚═══╝   ╚═╝    ╚═╝   
 `;
 
-  const hackbuildBannerTextLocal = `
-██╗  ██╗  █████╗   ██████╗ ██╗  ██╗ ██████╗  ██╗   ██╗ ██╗ ██╗      ██████╗ 
-██║  ██║ ██╔══██╗ ██╔════╝ ██║ ██╔╝ ██╔══██╗ ██║   ██║ ██║ ██║      ██╔══██╗
-███████║ ███████║ ██║      █████╔╝  ██████╔╝ ██║   ██║ ██║ ██║      ██║  ██║
-██╔══██║ ██╔══██║ ██║      ██╔═██╗  ██╔══██╗ ██║   ██║ ██║ ██║      ██║  ██║
-██║  ██║ ██║  ██║ ╚██████╗ ██║  ██╗ ██████╔╝ ╚██████╔╝ ██║ ███████╗ ██████╔╝
-╚═╝  ╚═╝ ╚═╝  ╚═╝  ╚═════╝ ╚═╝  ╚═╝ ╚═════╝   ╚═════╝  ╚═╝ ╚══════╝ ╚═════╝ 
-`;
 
   const bootMessages = [
     'Initializing GDG VIT Terminal...',
@@ -41,16 +32,16 @@ const Terminal = () => {
     'Starting system services...',
     'Mounting filesystems...',
     'Network interfaces up...',
-    'Welcome to GDG VIT Terminal v1.0.1',
+    'Welcome to GDG VIT Terminal v1.0.2',
     '',
     gdgBanner,
     '',
     'Google Developer Group - VIT Mumbai',
-    'Building the future, one line of code at a time.',
+    'Building the future, one line of code at a time. </>',
     '',
     'Type "gdg help" to see available commands.',
     '',
-    'Made with high dose of caffeine by Shweta <3',
+    'Made with high dose of caffeine <3',
     'still terminal is processing....',
   ];
 
@@ -61,9 +52,7 @@ const Terminal = () => {
     commandResponses,
   } = Commands();
 
-  const {
-    handleHackbuildCommand
-  } = HackbuildCommands();
+
 
   const [clearCommand, setClearCommand] = useState('');
 
@@ -116,14 +105,10 @@ const Terminal = () => {
       setCommandHistory([]);
       return;
     } else if (baseCommand === 'gdg hackbuild') {
-      if (args.length === 2) {
-        response = [
-          'We will reveal about it soon ;)',
-          'Something really excitingg !'
-        ];
-      } else {
-        response = handleHackbuildCommand(args.slice(2));
-      }
+      response = [
+        'We will reveal about it soon ;)',
+        'Something really excitingg !'
+      ];
     } else if (baseCommand === 'gdg help') {
       response = [
         <div key="help-main" className="output w-full animate-fadein text-[#c6d0f5]">
@@ -240,7 +225,6 @@ const Terminal = () => {
       terminalRef={terminalRef}
       inputRef={inputRef}
       gdgBanner={gdgBanner}
-      hackbuildBanner={hackbuildBannerTextLocal}
       commandHistory={commandHistory}
       currentPath={currentPath}
       currentCommand={currentCommand}
