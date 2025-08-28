@@ -49,7 +49,8 @@ const Terminal = () => {
     'Building the future, one line of code at a time.',
     '',
     'Type "gdg help" to see available commands.',
-    ''
+    '',
+    'Btw, Made by Shweta <3'
   ];
 
   const {
@@ -57,128 +58,13 @@ const Terminal = () => {
     resourceCommands,
     socialsList,
     commandResponses,
-    hackbuildBanner,
-    hackbuildSubcommands,
   } = Commands();
 
   const {
-    hackbuildBannerText,
     handleHackbuildCommand
   } = HackbuildCommands();
 
   const [clearCommand, setClearCommand] = useState('');
-
-  // Hackbuild subcommand responses
-  const hackbuildResponses = {
-    '--info': [
-      <div key="info" className="output w-full text-[#c6d0f5] animate-fadein">
-        <span key="hackbuild-title" className="font-bold text-pink-300">GDG Hackbuild - The Ultimate Hackathon Experience!</span>
-        <span key="hackbuild-desc" className="text-[#babbf1] block mt-2">Unleash your creativity, solve real-world problems, and win exciting prizes. Join us for a 24-hour coding marathon packed with innovation, learning, and fun!</span>
-        <span key="hackbuild-features" className="text-[#c6d0f5] mt-3 block">
-          <div>🔥 <span className="text-[#a6e3a1]">Features:</span> Exciting challenges, Mentorship, Networking, Prizes</div>
-          <div>🏆 <span className="text-[#a6e3a1]">Prize Pool:</span> ₹50,000+ in cash and goodies</div>
-          <div>📅 <span className="text-[#a6e3a1]">Date:</span> Coming Soon</div>
-          <div>📍 <span className="text-[#a6e3a1]">Venue:</span> VIT Mumbai Campus</div>
-        </span>
-      </div>
-    ],
-    '--domains': [
-      <div key="domains" className="output w-full text-[#c6d0f5] animate-fadein">
-        <div className="text-[#f38ba8] font-bold mb-3">🎯 Hackbuild 2025 - Competition Domains</div>
-        <div className="space-y-3">
-          <div className="text-[#a6e3a1]">🌐 Web Development</div>
-          <div className="text-[#c6d0f5] ml-4">Build innovative web applications, platforms, and tools</div>
-          
-          <div className="text-[#a6e3a1]">📱 Mobile Development</div>
-          <div className="text-[#c6d0f5] ml-4">Create cross-platform mobile solutions</div>
-          
-          <div className="text-[#a6e3a1]">🤖 AI/ML</div>
-          <div className="text-[#c6d0f5] ml-4">Develop intelligent systems and machine learning solutions</div>
-          
-          <div className="text-[#a6e3a1]">🔗 Blockchain</div>
-          <div className="text-[#c6d0f5] ml-4">Build decentralized applications and smart contracts</div>
-        </div>
-      </div>
-    ],
-    '--registration': [
-      <div key="registration" className="output w-full text-[#c6d0f5] animate-fadein">
-        <div className="text-[#f38ba8] font-bold mb-3">📝 Registration Information</div>
-        <div className="space-y-2">
-          <div className="text-[#f9e2af]">🚀 Registration will open soon!</div>
-          <div className="text-[#c6d0f5]">• Team Size: 2-4 members</div>
-          <div className="text-[#c6d0f5]">• Registration Link: Coming soon...</div>
-          <div className="text-[#a6e3a1] mt-3">Stay tuned to our socials for updates!</div>
-        </div>
-      </div>
-    ],
-    '--rulebook': [
-      <div key="rulebook" className="output w-full text-[#c6d0f5] animate-fadein">
-        <div className="text-[#f38ba8] font-bold mb-3">📋 Hackbuild 2025 - Rules & Guidelines</div>
-        <div className="space-y-3">
-          <div className="text-[#a6e3a1]">🎯 General Rules:</div>
-          
-          <div className="text-[#f9e2af] mt-3">📄 Full rulebook will be available soon!</div>
-        </div>
-      </div>
-    ],
-    '--dates': [
-      <div key="dates" className="output w-full text-[#c6d0f5] animate-fadein">
-        <div className="text-[#f38ba8] font-bold mb-3">📅 Hackbuild 2025 - Important Dates</div>
-        <div className="space-y-2">
-          <div className="text-[#a6e3a1]">📢 Registration Opens: Coming Soon</div>
-          <div className="text-[#a6e3a1]">📝 Registration Closes: TBA</div>
-          <div className="text-[#a6e3a1]">🎯 Problem Statements Release: TBA</div>
-          <div className="text-[#a6e3a1]">🚀 Hackathon Begins: TBA</div>
-          <div className="text-[#a6e3a1]">⏰ Submission Deadline: TBA</div>
-          <div className="text-[#a6e3a1]">🏆 Results & Closing: TBA</div>
-          <div className="text-[#f9e2af] mt-3">📧 Follow our socials for exact dates!</div>
-        </div>
-      </div>
-    ],
-    '--prizes': [
-      <div key="prizes" className="output w-full text-[#c6d0f5] animate-fadein">
-        <div className="text-[#f38ba8] font-bold mb-3">🏆 Hackbuild 2025 - Prize Pool</div>
-        <div className="space-y-3">
-          <div className="text-[#f9e2af]">💰 Total Prize Pool: ₹25,000+</div>
-          
-        </div>
-      </div>
-    ],
-    '--timeline': [
-      <div key="timeline" className="output w-full text-[#c6d0f5] animate-fadein">
-        <div className="text-[#f38ba8] font-bold mb-3">⏰ Hackbuild 2025 - Event Timeline</div>
-        <div className="space-y-3">
-          <div className="text-[#a6e3a1]">We will let you know soon ;)</div>
-        </div>
-      </div>
-    ],
-    '--sponsors': [
-      <div key="sponsors" className="output w-full text-[#c6d0f5] animate-fadein">
-        <div className="text-[#f38ba8] font-bold mb-3">🤝 Hackbuild 2025 - Sponsors & Partners</div>
-        <div className="space-y-3">
-          <div className="text-[#a6e3a1]">🏢 Title Sponsor:</div>
-          <div className="text-[#c6d0f5] ml-4">• Coming Soon...</div>
-          
-          <div className="text-[#a6e3a1]">💼 Gold Sponsors:</div>
-          <div className="text-[#c6d0f5] ml-4">• To be announced</div>
-          
-          <div className="text-[#a6e3a1]">🥈 Silver Sponsors:</div>
-          <div className="text-[#c6d0f5] ml-4">• To be announced</div>
-          
-          <div className="text-[#a6e3a1]">🤝 Community Partners:</div>
-          <div className="text-[#c6d0f5] ml-4">• Google Developer Groups</div>
-          <div className="text-[#c6d0f5] ml-4">• VIT Mumbai</div>
-          
-          <div className="text-[#f9e2af] mt-3">📞 Want to sponsor? Contact us at:</div>
-          <div className="text-[#c6d0f5] ml-4">
-            <a href="mailto:gdgoncampus.vit@gmail.com" className="underline hover:text-pink-300 transition-colors">
-              gdgoncampus.vit@gmail.com
-            </a>
-          </div>
-        </div>
-      </div>
-    ]
-  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -229,7 +115,14 @@ const Terminal = () => {
       setCommandHistory([]);
       return;
     } else if (baseCommand === 'gdg hackbuild') {
-      response = handleHackbuildCommand(args.slice(2));
+      if (args.length === 2) {
+        response = [
+          'We will reveal about it soon ;)',
+          'Something really excitingg !'
+        ];
+      } else {
+        response = handleHackbuildCommand(args.slice(2));
+      }
     } else if (baseCommand === 'gdg help') {
       response = [
         <div key="help-main" className="output w-full animate-fadein text-[#c6d0f5]">
@@ -251,10 +144,6 @@ const Terminal = () => {
               <div className="flex flex-col sm:flex-row">
                 <span className="text-[#a6e3a1] font-mono font-bold sm:w-48 flex-shrink-0">clear</span>
                 <span className="text-[#6c7086] sm:ml-4 mt-1 sm:mt-0">- Clear the terminal screen</span>
-              </div>
-              <div className="flex flex-col sm:flex-row">
-                <span className="text-[#a6e3a1] font-mono font-bold sm:w-48 flex-shrink-0">gdg hackbuild</span>
-                <span className="text-[#6c7086] sm:ml-4 mt-1 sm:mt-0">- Access Hackbuild hackathon information</span>
               </div>
             </div>
 

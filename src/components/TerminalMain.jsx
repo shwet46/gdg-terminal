@@ -6,7 +6,7 @@ import TerminalInput from './TerminalInput';
 const TerminalMain = ({
   terminalRef,
   inputRef,
-  hackbuildBanner,
+  gdgBanner,
   commandHistory,
   currentPath,
   currentCommand,
@@ -20,7 +20,7 @@ const TerminalMain = ({
       style={{ maxWidth: '100%' }}
     >
       <TerminalHeader />
-      <TerminalBanner banner={hackbuildBanner} className="gradient-banner" />
+      <TerminalBanner banner={gdgBanner} className="gradient-banner" />
       <CommandHistory commandHistory={commandHistory} currentPath={currentPath} />
       <TerminalInput
         inputRef={inputRef}

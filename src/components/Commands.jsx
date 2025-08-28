@@ -5,13 +5,13 @@ const Commands = () => {
     'gdg help': 'Show available commands',
     'whoarewe': 'About GDG VIT',
     'gdg hackbuild': 'Our hackathon',
-    'gdg spectrum': 'Our spectrum of annual events',
+    'gdg spectrum': 'Fest for cool tech nerds ^_~',
     'gdg socials': 'Connect with us !',
-    'clear': 'Clear terminal',
-    'whoami': 'Current user info',
-    'date': 'Show current date',
-    'cat resources': 'Some resources by our developers which will help you',
-    'gdg contact': 'contact us for collaboration',
+    'clear': 'Clear terminal, Whooshhh !',
+    'whoami': 'know yourself',
+    'date': 'If you forgot the date',
+    'cat resources': 'Some resources by our developers which will help you (⌐■_■) !!',
+    'gdg contact': 'contact us for collaboration (〃￣︶￣)人(￣︶￣〃)',
   };
 
   const resourceCommands = {
@@ -158,7 +158,7 @@ const Commands = () => {
       'Something really excitingg !'
     ],
     'gdg spectrum': [
-      'Our very own annual fest for cool tech Nerds',
+      'Our very own annual fest for cool tech Nerds ^_~',
       'To know more about it, check out here:',
       <a href="https://spectrum.gdgvitm.tech/" className="underline hover:text-[#f38ba8] transition-colors">spectrum.gdgvitm.tech</a>
     ],
@@ -182,7 +182,7 @@ const Commands = () => {
         </ul>
       </div>
     ],
-    'whoami': ['You should know who you are !'],
+    'whoami': ['You should know who you are :-)'],
     'cat resources': [
       <div key="resources-list" className="output w-full text-[#c6d0f5] animate-fadein">
         <span className="font-bold text-[#a6e3a1]">📚 Study Resources Commands:</span>
@@ -202,7 +202,7 @@ const Commands = () => {
         </div>
       </div>
     ],
-    'date': ['' + new Date().toString(), '(Maybe you should go to one too)'],
+    'date': ['' + new Date().toString(), '( Maybe you should go to one too ^.^ )'],
     'gdg contact': ['For collaboration or queries, please reach out to us at:', <a href="mailto:gdgoncampus.vit@gmail.com" className="underline hover:text-[#f38ba8] transition-colors break-all">gdgoncampus.vit@gmail.com</a>],
   };
 
