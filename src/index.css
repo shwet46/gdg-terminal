@@ -399,6 +399,24 @@
 .typing-slow { animation-duration: 0.08s; }
 .typing-hesitant { animation-duration: 0.12s; }
 
+/* Thick blinking block cursor for custom terminal input */
+.terminal-block-cursor {
+  position: absolute;
+  top: 2px; /* align with text baseline roughly */
+  width: 0.65ch; /* block width similar to terminal */
+  height: 1.1em;
+  background: #f2d5cf;
+  animation: cursor-block-blink 1s steps(1) infinite;
+  pointer-events: none;
+  box-shadow: 0 0 4px rgba(242, 213, 207, 0.6);
+}
+
+@keyframes cursor-block-blink {
+  0%, 45% { opacity: 1; }
+  50%, 95% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
 /* Command execution animation */
 @keyframes command-execute {
   0% {
