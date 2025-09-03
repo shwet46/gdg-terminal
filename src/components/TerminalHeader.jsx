@@ -4,7 +4,7 @@ const TerminalHeader = () => (
   <div className="mb-4 pb-2 bg-none flex items-center">
     <span className="text-[#a6e3a1] font-bold text-sm sm:text-base md:text-lg tracking-wide break-words">
       <span className="hidden sm:inline">
-        Oh look, another “terminal.” Time to feel like a real developer ~/
+        Oh look, another “terminal.” Time to feel like a real developer ~
       </span>
       <span className="sm:inline">
         &nbsp;type 'gdg help' for commands... if you actually read instructions. <br/>

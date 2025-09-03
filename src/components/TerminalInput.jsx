@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-// Thick blinking block cursor implementation
+// Thick blinking block cursor
 const TerminalInput = ({
   inputRef,
   currentCommand,
